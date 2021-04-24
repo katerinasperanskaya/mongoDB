@@ -4,8 +4,8 @@
  * @param {*} res
  */
 exports.getCustomers = async (req, res) => {
-  console.log("get all customers");
-  console.log(req);
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Get All Customers" }));
 };
 
 /**
@@ -14,7 +14,8 @@ exports.getCustomers = async (req, res) => {
  * @param {*} res
  */
 exports.getCustomerById = async (req, res) => {
-  console.log("get customer by id");
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Get Customer By Id" }));
 };
 
 /**
@@ -23,7 +24,8 @@ exports.getCustomerById = async (req, res) => {
  * @param {*} res
  */
 exports.createCustomer = async (req, res) => {
-  console.log("create customer");
+  res.writeHead(201, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Create Customer" }));
 };
 
 /**
@@ -32,7 +34,8 @@ exports.createCustomer = async (req, res) => {
  * @param {*} res
  */
 exports.updateCustomer = async (req, res) => {
-  console.log("update customer");
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Update Customer" }));
 };
 
 /**
@@ -41,5 +44,6 @@ exports.updateCustomer = async (req, res) => {
  * @param {*} res
  */
 exports.deleteCustomer = async (req, res) => {
-  console.log("delete customer");
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Delete Customer" }));
 };
