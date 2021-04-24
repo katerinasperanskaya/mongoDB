@@ -1,9 +1,21 @@
+const {
+  getCustomerById,
+  getCustomers,
+  updateCustomer,
+  createCustomer,
+  deleteCustomer,
+} = require("./controllers/customers");
+
 var http = require("http");
 
-var fs = require("fs");
-const { get, Server } = require("node:http");
-const { publicDecrypt } = require("node:crypto");
+const server = http.createServer((req, res) => {
+  if (req.url === "/customers" && req.method === "GET") {
+    getCustomers(req, res);
+  }
+});
 
+const PORT = 5000;
 
-REST api
-- 
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
