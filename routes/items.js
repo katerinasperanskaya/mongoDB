@@ -1,5 +1,6 @@
 const {
   getItems,
+  getItemById,
   updateItem,
   createItem,
   deleteItem,
@@ -8,7 +9,11 @@ const {
 const ItemRoutes = (req, res) => {
   switch (req.method) {
     case "GET":
-      getItems(req, res);
+      if (req.url === "/items") {
+        getItems(req, res);
+      } else {
+        getItemById(req, res);
+      }
       break;
     case "POST":
       createItem(req, res);

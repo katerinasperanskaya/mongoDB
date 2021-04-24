@@ -1,5 +1,6 @@
 const {
   getCustomers,
+  getCustomerById,
   updateCustomer,
   createCustomer,
   deleteCustomer,
@@ -8,7 +9,11 @@ const {
 const customerRoutes = (req, res) => {
   switch (req.method) {
     case "GET":
-      getCustomers(req, res);
+      if (req.url === "/customers") {
+        getCustomers(req, res);
+      } else {
+        getCustomerById(req, res);
+      }
       break;
     case "POST":
       createCustomer(req, res);

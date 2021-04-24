@@ -1,3 +1,5 @@
+const { getReqBody } = require("../utils");
+
 /**
  * getCustomers
  * @param {*} req
@@ -25,6 +27,7 @@ exports.getCustomerById = async (req, res) => {
  */
 exports.createCustomer = async (req, res) => {
   res.writeHead(201, { "Content-Type": "application/json" });
+  console.log(await getReqBody(req));
   res.end(JSON.stringify({ message: "Create Customer" }));
 };
 
