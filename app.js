@@ -1,9 +1,13 @@
 var http = require("http");
-
 const customerRoutes = require("./routes/customers");
 const itemRoutes = require("./routes/items");
 const orderRoutes = require("./routes/orders");
+const connectDb = require("./utils/connectDb");
 
+// connect to db
+connectDb();
+
+// routes
 const server = http.createServer((req, res) => {
   if (req.url.includes("customers")) {
     customerRoutes(req, res);
@@ -17,8 +21,9 @@ const server = http.createServer((req, res) => {
   }
 });
 
+// start server
 const PORT = 5000;
 
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
 });

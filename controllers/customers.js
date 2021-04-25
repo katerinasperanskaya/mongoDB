@@ -1,4 +1,4 @@
-const { getReqBody } = require("../utils");
+const { getReqBody } = require("../utils/getReqBody");
 
 /**
  * getCustomers
