@@ -1,11 +1,14 @@
+const orderModel = require("../models/order");
+
 /**
  * getOrders
  * @param {*} req
  * @param {*} res
  */
 exports.getOrders = async (req, res) => {
+  const orders = await orderModel.getAll();
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Get All Orders" }));
+  res.end(JSON.stringify({ orders, status: 200, message: "success" }));
 };
 
 /**
@@ -14,8 +17,11 @@ exports.getOrders = async (req, res) => {
  * @param {*} res
  */
 exports.getOrderById = async (req, res) => {
+  const id = req.url.substring(8);
+  console.log(id);
+  const order = await orderModel.getById(id);
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Get Order By Id" }));
+  res.end(JSON.stringify({ order, status: 200, message: "success" }));
 };
 
 /**
@@ -44,6 +50,8 @@ exports.updateOrder = async (req, res) => {
  * @param {*} res
  */
 exports.deleteOrder = async (req, res) => {
+  const id = req.url.substring(8);
+  await orderModel.remove(id);
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Delete Order" }));
+  res.end(JSON.stringify({ status: 200, message: "success" }));
 };

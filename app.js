@@ -2,10 +2,6 @@ var http = require("http");
 const customerRoutes = require("./routes/customers");
 const itemRoutes = require("./routes/items");
 const orderRoutes = require("./routes/orders");
-const connectDb = require("./utils/connectDb");
-
-// connect to db
-connectDb();
 
 // routes
 const server = http.createServer((req, res) => {

@@ -8,7 +8,7 @@ const getReqBody = (req) => {
       });
 
       req.on("end", () => {
-        res(body);
+        res(JSON.parse(body));
       });
     } catch (e) {
       rej(e);
