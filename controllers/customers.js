@@ -1,5 +1,5 @@
-const { getReqBody } = require("../utils/getReqBody");
-const customerModel = require("../models/customer");
+const { getReqBody } = require('../utils/getReqBody');
+const customerModel = require('../models/customer');
 
 /**
  * getCustomers
@@ -8,8 +8,8 @@ const customerModel = require("../models/customer");
  */
 exports.getCustomers = async (req, res) => {
   const customers = await customerModel.getAll();
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ customers, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ customers, status: 200, message: 'success' }));
 };
 
 /**
@@ -20,8 +20,8 @@ exports.getCustomers = async (req, res) => {
 exports.getCustomerById = async (req, res) => {
   const id = req.url.substring(11);
   const customer = await customerModel.getById(id);
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ customer, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ customer, status: 200, message: 'success' }));
 };
 
 /**
@@ -47,16 +47,16 @@ exports.createCustomer = async (req, res) => {
     !shipping.county
   ) {
     res.writeHead(400, {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     });
-    return res.end(JSON.stringify({ message: "Data invalid" }));
+    return res.end(JSON.stringify({ message: 'Data invalid' }));
   }
 
   //  if data is valid call create method on model
   const customer = await customerModel.create(newCustomer);
 
   res.writeHead(201, {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   });
   res.end(JSON.stringify({ customer }));
 };
@@ -86,16 +86,16 @@ exports.updateCustomer = async (req, res) => {
     !shipping.county
   ) {
     res.writeHead(400, {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     });
-    return res.end(JSON.stringify({ message: "Data invalid" }));
+    return res.end(JSON.stringify({ message: 'Data invalid' }));
   }
 
   //  if data is valid call create method on model
   const customer = await customerModel.update(id, updatedCustomer);
 
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ customer, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ customer, status: 200, message: 'success' }));
 };
 
 /**
@@ -105,7 +105,8 @@ exports.updateCustomer = async (req, res) => {
  */
 exports.deleteCustomer = async (req, res) => {
   const id = req.url.substring(11);
+
   await customerModel.remove(id);
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: 200, message: 'success' }));
 };

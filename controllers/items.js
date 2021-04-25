@@ -1,5 +1,5 @@
-const { getReqBody } = require("../utils/getReqBody");
-const itemModel = require("../models/item");
+const { getReqBody } = require('../utils/getReqBody');
+const itemModel = require('../models/item');
 
 /**
  * getItems
@@ -8,8 +8,8 @@ const itemModel = require("../models/item");
  */
 exports.getItems = async (req, res) => {
   const items = await itemModel.getAll();
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ items, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ items, status: 200, message: 'success' }));
 };
 
 /**
@@ -18,8 +18,8 @@ exports.getItems = async (req, res) => {
  * @param {*} res
  */
 exports.getItemById = async (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Get Item By Id" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Get Item By Id' }));
 };
 
 /**
@@ -34,16 +34,16 @@ exports.createItem = async (req, res) => {
   // check for mandatory data
   if (!manufacturer || !model || !price) {
     res.writeHead(400, {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     });
-    return res.end(JSON.stringify({ message: "Data invalid" }));
+    return res.end(JSON.stringify({ message: 'Data invalid' }));
   }
 
   //  if data is valid call create method on item
-  const item = await itemModel.create(newItem);
+  await itemModel.create(newItem);
 
-  res.writeHead(201, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Create Item" }));
+  res.writeHead(201, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Create Item' }));
 };
 
 /**
@@ -52,8 +52,8 @@ exports.createItem = async (req, res) => {
  * @param {*} res
  */
 exports.updateItem = async (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Update Item" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Update Item' }));
 };
 
 /**
@@ -62,6 +62,6 @@ exports.updateItem = async (req, res) => {
  * @param {*} res
  */
 exports.deleteItem = async (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Delete Item" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Delete Item' }));
 };

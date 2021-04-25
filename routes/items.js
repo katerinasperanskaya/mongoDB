@@ -4,24 +4,24 @@ const {
   updateItem,
   createItem,
   deleteItem,
-} = require("../controllers/Items");
+} = require('../controllers/Items');
 
 const ItemRoutes = (req, res) => {
   switch (req.method) {
-    case "GET":
-      if (req.url === "/items") {
+    case 'GET':
+      if (req.url === '/items') {
         getItems(req, res);
       } else {
         getItemById(req, res);
       }
       break;
-    case "POST":
+    case 'POST':
       createItem(req, res);
       break;
-    case "PUT":
+    case 'PUT':
       updateItem(req, res);
       break;
-    case "DELETE":
+    case 'DELETE':
       deleteItem(req, res);
       break;
   }

@@ -1,4 +1,4 @@
-const orderModel = require("../models/order");
+const orderModel = require('../models/order');
 
 /**
  * getOrders
@@ -7,8 +7,8 @@ const orderModel = require("../models/order");
  */
 exports.getOrders = async (req, res) => {
   const orders = await orderModel.getAll();
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ orders, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ orders, status: 200, message: 'success' }));
 };
 
 /**
@@ -20,8 +20,8 @@ exports.getOrderById = async (req, res) => {
   const id = req.url.substring(8);
   console.log(id);
   const order = await orderModel.getById(id);
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ order, status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ order, status: 200, message: 'success' }));
 };
 
 /**
@@ -30,8 +30,8 @@ exports.getOrderById = async (req, res) => {
  * @param {*} res
  */
 exports.createOrder = async (req, res) => {
-  res.writeHead(201, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Create Order" }));
+  res.writeHead(201, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Create Order' }));
 };
 
 /**
@@ -40,8 +40,8 @@ exports.createOrder = async (req, res) => {
  * @param {*} res
  */
 exports.updateOrder = async (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ message: "Update Order" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'Update Order' }));
 };
 
 /**
@@ -52,6 +52,6 @@ exports.updateOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   const id = req.url.substring(8);
   await orderModel.remove(id);
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: 200, message: "success" }));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: 200, message: 'success' }));
 };

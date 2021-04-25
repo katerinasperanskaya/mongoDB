@@ -4,24 +4,25 @@ const {
   updateOrder,
   createOrder,
   deleteOrder,
-} = require("../controllers/Orders");
+} = require('../controllers/Orders');
 
 const OrderRoutes = (req, res) => {
   switch (req.method) {
-    case "GET":
-      if (req.url === "/orders") {
+    case 'GET':
+      if (req.url === '/orders') {
         getOrders(req, res);
       } else {
         getOrderById(req, res);
       }
+
       break;
-    case "POST":
+    case 'POST':
       createOrder(req, res);
       break;
-    case "PUT":
+    case 'PUT':
       updateOrder(req, res);
       break;
-    case "DELETE":
+    case 'DELETE':
       deleteOrder(req, res);
       break;
   }

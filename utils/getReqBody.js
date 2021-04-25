@@ -1,17 +1,17 @@
 const getReqBody = (req) => {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     try {
-      let body = "";
+      let body = '';
 
-      req.on("data", (chunk) => {
+      req.on('data', (chunk) => {
         body += chunk.toString();
       });
 
-      req.on("end", () => {
-        res(JSON.parse(body));
+      req.on('end', () => {
+        resolve(JSON.parse(body));
       });
     } catch (e) {
-      rej(e);
+      reject(e);
     }
   });
 };

@@ -4,24 +4,24 @@ const {
   updateCustomer,
   createCustomer,
   deleteCustomer,
-} = require("../controllers/customers");
+} = require('../controllers/customers');
 
 const customerRoutes = (req, res) => {
   switch (req.method) {
-    case "GET":
-      if (req.url === "/customers") {
+    case 'GET':
+      if (req.url === '/customers') {
         getCustomers(req, res);
       } else {
         getCustomerById(req, res);
       }
       break;
-    case "POST":
+    case 'POST':
       createCustomer(req, res);
       break;
-    case "PUT":
+    case 'PUT':
       updateCustomer(req, res);
       break;
-    case "DELETE":
+    case 'DELETE':
       deleteCustomer(req, res);
       break;
   }
