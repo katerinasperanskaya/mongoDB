@@ -20,6 +20,10 @@ exports.getOrderById = async (req, res) => {
   const id = req.url.substring(8);
   console.log(id);
   const order = await orderModel.getById(id);
+  if (!order) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ status: 404, message: 'Order not found' }));
+  }
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ order, status: 200, message: 'success' }));
 };
@@ -52,6 +56,7 @@ exports.updateOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   const id = req.url.substring(8);
   await orderModel.remove(id);
+
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ status: 200, message: 'success' }));
 };

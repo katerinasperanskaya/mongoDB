@@ -27,17 +27,12 @@ const getById = async (id) => {
 const create = async (newItem) => {
   const connection = await mongo.connect(mongoUri, options);
   const { manufacturer, model, price } = newItem;
-  let item;
-  try {
-    item = await connection
-      .db('test')
-      .collection('items')
-      .insertOne({ manufacturer, model, price: parseInt(price) });
-  } catch (e) {
-    console.log(e);
-  }
+  const item = await connection
+    .db('test')
+    .collection('items')
+    .insertOne({ manufacturer, model, price: parseInt(price) });
   await connection.close();
-  return item;
+  return item.ops[0];
 };
 
 const update = async (id, updatedItem) => {
@@ -47,7 +42,7 @@ const update = async (id, updatedItem) => {
     .collection('items')
     .replaceOne({ _id: mongo.ObjectID(id) }, updatedItem);
   await connection.close();
-  return item;
+  return item.ops[0];
 };
 
 const remove = async (id) => {

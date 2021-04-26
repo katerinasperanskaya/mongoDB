@@ -31,17 +31,18 @@ const create = async (newCustomer) => {
     .collection('customers')
     .insertOne(newCustomer);
   await connection.close();
-  return customer;
+  return customer.ops[0];
 };
 
 const update = async (id, updatedCustomer) => {
   const connection = await mongo.connect(mongoUri, options);
+
   const customer = await connection
     .db('test')
     .collection('customers')
     .replaceOne({ _id: mongo.ObjectID(id) }, updatedCustomer);
   await connection.close();
-  return customer;
+  return customer.ops[0];
 };
 
 const remove = async (id) => {

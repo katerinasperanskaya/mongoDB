@@ -20,6 +20,13 @@ exports.getCustomers = async (req, res) => {
 exports.getCustomerById = async (req, res) => {
   const id = req.url.substring(11);
   const customer = await customerModel.getById(id);
+
+  if (!customer) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    return res.end(
+      JSON.stringify({ status: 404, message: 'Customer Not Found' })
+    );
+  }
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ customer, status: 200, message: 'success' }));
 };
@@ -58,7 +65,7 @@ exports.createCustomer = async (req, res) => {
   res.writeHead(201, {
     'Content-Type': 'application/json',
   });
-  res.end(JSON.stringify({ customer }));
+  res.end(JSON.stringify({ status: 201, message: 'success', customer }));
 };
 
 /**
@@ -68,6 +75,17 @@ exports.createCustomer = async (req, res) => {
  */
 exports.updateCustomer = async (req, res) => {
   const id = req.url.substring(11);
+
+  // handle customer doesn't exist
+  const customerExists = await customerModel.getById(id);
+  if (!customerExists) {
+    res.writeHead(404, {
+      'Content-Type': 'application/json',
+    });
+    return res.end(
+      JSON.stringify({ status: 404, message: 'Customer not found' })
+    );
+  }
 
   const updatedCustomer = await getReqBody(req);
   const { personal, billing, shipping } = updatedCustomer;
@@ -92,7 +110,13 @@ exports.updateCustomer = async (req, res) => {
   }
 
   //  if data is valid call create method on model
-  const customer = await customerModel.update(id, updatedCustomer);
+  let customer;
+  try {
+    customer = await customerModel.update(id, updatedCustomer);
+  } catch (e) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 500, message: 'Unkown Error' }));
+  }
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ customer, status: 200, message: 'success' }));
@@ -105,6 +129,21 @@ exports.updateCustomer = async (req, res) => {
  */
 exports.deleteCustomer = async (req, res) => {
   const id = req.url.substring(11);
+
+  // handle customer doesn't exist
+  try {
+    const customerExists = await customerModel.getById(id);
+    if (!customerExists) {
+      throw Error;
+    }
+  } catch (e) {
+    res.writeHead(404, {
+      'Content-Type': 'application/json',
+    });
+    return res.end(
+      JSON.stringify({ status: 404, message: 'Customer not found' })
+    );
+  }
 
   await customerModel.remove(id);
   res.writeHead(200, { 'Content-Type': 'application/json' });

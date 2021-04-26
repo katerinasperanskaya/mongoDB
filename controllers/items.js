@@ -18,8 +18,15 @@ exports.getItems = async (req, res) => {
  * @param {*} res
  */
 exports.getItemById = async (req, res) => {
+  const id = req.url.substring(7);
+  const item = await itemModel.getById(id);
+
+  if (!item) {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ status: 404, message: 'Item not found' }));
+  }
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Get Item By Id' }));
+  res.end(JSON.stringify({ item, status: 200, message: 'success' }));
 };
 
 /**
@@ -40,10 +47,10 @@ exports.createItem = async (req, res) => {
   }
 
   //  if data is valid call create method on item
-  await itemModel.create(newItem);
+  const item = await itemModel.create(newItem);
 
   res.writeHead(201, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Create Item' }));
+  res.end(JSON.stringify({ status: 201, message: 'success', item }));
 };
 
 /**
@@ -52,8 +59,34 @@ exports.createItem = async (req, res) => {
  * @param {*} res
  */
 exports.updateItem = async (req, res) => {
+  console.log(req.url);
+  const id = req.url.substring(7);
+
+  // handle item doesn't exist
+  const itemExists = await itemModel.getById(id);
+  if (!itemExists) {
+    res.writeHead(404, {
+      'Content-Type': 'application/json',
+    });
+    return res.end(JSON.stringify({ status: 404, message: 'Item not found' }));
+  }
+
+  const updateItem = await getReqBody(req);
+  const { manufacturer, model, price } = updateItem;
+
+  // check for mandatory data
+  if (!manufacturer || !model || !price) {
+    res.writeHead(400, {
+      'Content-Type': 'application/json',
+    });
+    return res.end(JSON.stringify({ message: 'Data invalid' }));
+  }
+
+  //  if data is valid call create method on item
+  const item = await itemModel.update(id, updateItem);
+
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Update Item' }));
+  res.end(JSON.stringify({ status: 200, message: 'success', item }));
 };
 
 /**
@@ -62,6 +95,22 @@ exports.updateItem = async (req, res) => {
  * @param {*} res
  */
 exports.deleteItem = async (req, res) => {
+  const id = req.url.substring(7);
+
+  // handle item doesn't exist
+  try {
+    const itemExists = await itemModel.getById(id);
+    if (!itemExists) {
+      throw Error;
+    }
+  } catch (e) {
+    res.writeHead(404, {
+      'Content-Type': 'application/json',
+    });
+    return res.end(JSON.stringify({ status: 404, message: 'Item not found' }));
+  }
+
+  await itemModel.remove(id);
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Delete Item' }));
+  res.end(JSON.stringify({ status: 200, message: 'success' }));
 };
