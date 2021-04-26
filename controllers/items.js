@@ -59,7 +59,6 @@ exports.createItem = async (req, res) => {
  * @param {*} res
  */
 exports.updateItem = async (req, res) => {
-  console.log(req.url);
   const id = req.url.substring(7);
 
   // handle item doesn't exist

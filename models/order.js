@@ -24,9 +24,38 @@ const getById = async (id) => {
   return order;
 };
 
-const create = async (itemstopurcase) => {};
+const create = async (newOrder) => {
+  const connection = await mongo.connect(mongoUri, options);
+  const { customer, items } = newOrder;
+  const castItems = items.map((item) => mongo.ObjectID(item));
+  const order = await connection
+    .db('test')
+    .collection('orders')
+    .insertOne({
+      customer: mongo.ObjectID(customer),
+      items: castItems,
+    });
+  await connection.close();
+  return order.ops[0];
+};
 
-const update = async () => {};
+const update = async (id, updatedOrder) => {
+  const connection = await mongo.connect(mongoUri, options);
+  const { customer, items } = updatedOrder;
+  const castItems = items.map((item) => mongo.ObjectID(item));
+  const order = await connection
+    .db('test')
+    .collection('orders')
+    .replaceOne(
+      { _id: mongo.ObjectID(id) },
+      {
+        customer: mongo.ObjectID(customer),
+        items: castItems,
+      }
+    );
+  await connection.close();
+  return order.ops[0];
+};
 
 const remove = async (id) => {
   const connection = await mongo.connect(mongoUri, options);
